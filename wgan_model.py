@@ -105,7 +105,7 @@ class DataWrapper(object):
         continuous, categorical = x.split((self.means[0].size(-1), sum(self.cat_dims)), -1)
         continuous, context = [x*s+m for x,m,s in zip([continuous, context], self.means, self.stds)]
         for p in categorical.split(self.cat_dims, -1):
-        print(p)
+            print(p)
         if categorical.size(-1) > 0: categorical = torch.cat([torch.multinomial(p, 1) for p in categorical.split(self.cat_dims, -1)], -1)
         df = pd.DataFrame(dict(zip(self.variables["continuous"] + self.variables["categorical"] + self.variables["context"],
                                    torch.cat([continuous, categorical.to(torch.float), context], -1).detach().t())))
